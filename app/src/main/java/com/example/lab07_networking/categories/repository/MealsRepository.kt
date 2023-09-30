@@ -1,4 +1,4 @@
-package com.example.lab07_networking.meals.repository
+package com.example.lab07_networking.categories.repository
 
 
 import android.util.Log
@@ -29,4 +29,6 @@ class MealsRepository(private val webService: MealsWebService = MealsWebService(
             }
         })
     }
+
 }
+

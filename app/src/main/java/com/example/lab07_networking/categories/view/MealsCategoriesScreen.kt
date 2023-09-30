@@ -1,4 +1,4 @@
-package com.example.lab07_networking.meals.view
+package com.example.lab07_networking.categories.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -22,12 +21,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.lab07_networking.meals.viewmodel.MealsCategoriesViewModel
+import com.example.lab07_networking.categories.viewmodel.MealsCategoriesViewModel
+import com.example.lab07_networking.meals.viewmodel.MealsViewModel
 import com.example.lab07_networking.networking.response.MealResponse
 
 @Composable
-fun MealsCategoriesScreen() {
+fun MealsCategoriesScreen(navController: NavController) {
     val viewModel: MealsCategoriesViewModel = viewModel()
     val rememberedMeals: MutableState<List<MealResponse>> = remember { mutableStateOf(emptyList<MealResponse>()) }
 
@@ -59,31 +60,26 @@ fun MealsCategoriesScreen() {
             }
         }
 
-        items(rememberedMeals.value.chunked(2)) { rowMeals ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                rowMeals.forEach { meal ->
-                    MealCard(meal = meal)
-                }
-            }
+        items(rememberedMeals.value) { meal ->
+            MealCard(meal, navController = navController)
         }
     }
 }
 
+
+
 @Composable
-fun MealCard(meal: MealResponse) {
+fun MealCard(meal: MealResponse, navController: NavController) {
+
     Card(
         modifier = Modifier
-            .fillMaxWidth(1f) // Para que cada Card ocupe la mitad del ancho disponible
+            .fillMaxWidth(1f)
             .height(200.dp)
             .padding(end = 8.dp)
             .border(6.dp, Color(0xFFC39BD3))
             .clickable {
                 println("Card Clicked: ${meal.name}")
+                navController.navigate("meals/${meal.name}")
             },
     ) {
         Column(
@@ -110,7 +106,7 @@ fun MealCard(meal: MealResponse) {
                     fontWeight = FontWeight.Bold, // Texto en negrita
                     textAlign = TextAlign.Center, // Centrar el texto
                     modifier = Modifier
-                        .fillMaxWidth() // Asegurarse de que el texto pueda centrarse en toda la anchura disponible
+                        .fillMaxWidth()
                         .padding(8.dp)
                 )
             }
