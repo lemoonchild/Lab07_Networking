@@ -10,4 +10,5 @@ data class MealResponse(
     @SerializedName("strCategory") val name: String,
     @SerializedName("strCategoryDescription") val description: String,
     @SerializedName("strCategoryThumb") val imageUrl: String
+
 )
