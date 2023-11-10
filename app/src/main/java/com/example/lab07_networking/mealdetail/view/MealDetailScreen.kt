@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,7 +31,9 @@ fun MealsDetailScreen(idMeal: String, navController: NavController) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
     ) {
         // Título Superior
         Box(
@@ -67,6 +71,7 @@ fun InfoCard(meal: MealInstructions) {
             modifier = Modifier
                 .background(Color.White)
                 .padding(8.dp)
+
         ) {
             Text(
                 text = "Area: ${meal.strArea}",
@@ -98,6 +103,7 @@ fun InstructionsCard(meal: MealInstructions) {
             modifier = Modifier
                 .background(Color.White)
                 .padding(8.dp)
+                .verticalScroll(rememberScrollState(), enabled = true)
         ) {
             Text(
                 text = "Instructions",
